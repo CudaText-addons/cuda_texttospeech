@@ -4,6 +4,7 @@ desc=Speak text using Windows Speech API
 type=cudatext-plugin
 subdir=cuda_texttospeech
 homepage=https://github.com/CudaText-addons/cuda_texttospeech
+os=win
 
 [item1]
 section=commands
