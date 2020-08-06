@@ -14,8 +14,8 @@ fn_ini = os.path.join(app_path(APP_DIR_SETTINGS), 'cuda_texttospeech.ini')
 op_rate = 1
 op_volume = 100
 op_voice = ''
-debug_print = True
-replace_trivial_eol_newline = True
+debug_print = False
+replace_eol = True
 
 def load_options():
 
@@ -23,13 +23,15 @@ def load_options():
     global op_volume
     global op_voice
     global debug_print
-    global replace_trivial_eol_newline
+    global replace_eol
 
-    op_rate = int(ini_read(fn_ini, 'op', 'tts_rate', '1'))
-    op_volume = int(ini_read(fn_ini, 'op', 'tts_volume', '100'))
-    op_voice = ini_read(fn_ini, 'op', 'tts_voice', '')
+    op_rate = int(ini_read(fn_ini, 'op', 'tts_rate', str(op_rate)))
+    op_volume = int(ini_read(fn_ini, 'op', 'tts_volume', str(op_volume)))
+    op_voice = ini_read(fn_ini, 'op', 'tts_voice', op_voice or '')
+    if op_voice=='':
+        op_voice = None
     debug_print = ini_read(fn_ini, 'op', 'debug_print', '1')=='1'
-    replace_trivial_eol_newline = ini_read(fn_ini, 'op', 'replace_trivial_eol_newline', '1')=='1'
+    replace_eol = ini_read(fn_ini, 'op', 'replace_eol', '1')=='1'
     
     if debug_print:
         print("TextToSpeech settings:")
@@ -53,7 +55,7 @@ class Command:
         if debug_print: 
             print("\nTextToSpeech Speak, settings:")
             print("  debug_print: ", debug_print)
-            print("  replace_trivial_eol_newline: ", replace_trivial_eol_newline)
+            print("  replace_eol: ", replace_eol)
             #print("  regex_substitutions: ", "".join("\n    - %s" % (tup,) for tup in regex_substitutions) if regex_substitutions else regex_substitutions)
 
         x, y, x1, y1 = ed.get_carets()[0]
@@ -65,7 +67,7 @@ class Command:
             print('No text to process')
             return
 
-        if replace_trivial_eol_newline:
+        if replace_eol:
             trivial_eol_newline_regex = re.compile(r"\n(?=\w)")  # Newline not followed by another newline.
             text, counts = trivial_eol_newline_regex.subn(" ", text)  # Replace trivial newlines in text with a space.
             if debug_print:
@@ -130,6 +132,6 @@ class Command:
         load_options()
         if debug_print:
             print("tts.reinitialize_voice() ... ", end="")
-        ret = reinitialize_with_settings()
+        ret = load_options()
         if debug_print:
             print(ret)
