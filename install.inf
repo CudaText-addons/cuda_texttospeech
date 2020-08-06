@@ -1,9 +1,9 @@
 [info]
 title=TextToSpeech
-desc=Uses Windows TextToSpeech engine
+desc=Speak text by Windows engine TextTpSpeech
 type=cudatext-plugin
 subdir=cuda_texttospeech
-homepage=
+homepage=https://github.com/CudaText-addons/cuda_texttospeech
 
 [item1]
 section=commands
