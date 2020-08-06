@@ -17,7 +17,10 @@ op_voice = ''
 debug_print = False
 replace_eol = True
 
-def load_options():
+def bool_to_str(b):
+    return '1' if b else '0'
+
+def load_options(and_init=True):
 
     global op_rate
     global op_volume
@@ -30,7 +33,7 @@ def load_options():
     op_voice = ini_read(fn_ini, 'op', 'tts_voice', op_voice or '')
     if op_voice=='':
         op_voice = None
-    debug_print = ini_read(fn_ini, 'op', 'debug_print', '1')=='1'
+    debug_print = ini_read(fn_ini, 'op', 'debug_print', '0')=='1'
     replace_eol = ini_read(fn_ini, 'op', 'replace_eol', '1')=='1'
     
     if debug_print:
@@ -38,11 +41,16 @@ def load_options():
         print("rate:", op_rate)
         print("volume:", op_volume)
         print("voice:", op_voice)
-    return tts.reinitialize_voice(
-        rate=op_rate,
-        volume=op_volume,
-        voice=op_voice,
-    )
+
+    if and_init:
+        try:
+            return tts.reinitialize_voice(
+                rate=op_rate,
+                volume=op_volume,
+                voice=op_voice,
+            )
+        except:
+            pass
 
 load_options()
 
@@ -135,3 +143,15 @@ class Command:
         ret = load_options()
         if debug_print:
             print(ret)
+
+    def config(self):
+
+        load_options(False)
+        
+        ini_write(fn_ini, 'op', 'tts_rate', str(op_rate))
+        ini_write(fn_ini, 'op', 'tts_volume', str(op_volume))
+        ini_write(fn_ini, 'op', 'tts_voice', op_voice or '')
+        ini_write(fn_ini, 'op', 'debug_print', bool_to_str(debug_print))
+        ini_write(fn_ini, 'op', 'replace_eol', bool_to_str(replace_eol))
+        
+        file_open(fn_ini)

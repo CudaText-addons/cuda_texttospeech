@@ -34,3 +34,9 @@ method=do_stop
 section=commands
 caption=TextToSpeech\Re-initialize engine
 method=reinit
+
+[item30]
+section=commands
+caption=TextToSpeech\Config
+method=config
+menu=o
