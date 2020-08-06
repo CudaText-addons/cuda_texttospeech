@@ -1,0 +1,36 @@
+[info]
+title=TextToSpeech
+desc=Uses Windows TextToSpeech engine
+type=cudatext-plugin
+subdir=cuda_texttospeech
+homepage=
+
+[item1]
+section=commands
+caption=TextToSpeech\Speak
+method=do_speak
+
+[item2]
+section=commands
+caption=TextToSpeech\Pause
+method=do_pause
+
+[item3]
+section=commands
+caption=TextToSpeech\Resume
+method=do_resume
+
+[item8]
+section=commands
+caption=TextToSpeech\Skip to next sentence
+method=do_skip
+
+[item10]
+section=commands
+caption=TextToSpeech\Stop
+method=do_stop
+
+[item20]
+section=commands
+caption=TextToSpeech\Re-initialize engine
+method=reinit
