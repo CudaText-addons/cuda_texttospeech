@@ -40,7 +40,10 @@ def reinitialize_voice(rate=None, volume=None, voice=None):
 def speak(sentence):
     if spvoice is None:
         reinitialize_voice()
-    return spvoice.Speak(sentence.encode('utf-8'), 19)  # returns immediately.
+    return spvoice.Speak(
+        #sentence.encode('utf-8'),
+        sentence,
+        19)  # returns immediately.
 
 
 def pause():
