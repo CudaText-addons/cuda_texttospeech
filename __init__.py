@@ -84,8 +84,8 @@ class Command:
             return
 
         if replace_eol:
-            trivial_eol_newline_regex = re.compile(r"\n(?=\w)")  # Newline not followed by another newline.
-            text, counts = trivial_eol_newline_regex.subn(" ", text)  # Replace trivial newlines in text with a space.
+            regex1 = re.compile(r"\n(?=\w)")  # Newline not followed by another newline.
+            text, counts = regex1.subn(" ", text)  # Replace trivial newlines in text with a space.
             if debug_print:
                 print("Substituted %s trivial end-of-line newlines a space." % (counts, ))
 
