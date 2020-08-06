@@ -2,9 +2,9 @@ import sys
 import os
 import re
 from cudatext import *
-from . import pywin32
 
 if os.name=='nt':
+    import pywin32
     from .simple_tts import tts_win as tts
 else:
     raise RuntimeError("TextToSpeech currently only supports Windows")
