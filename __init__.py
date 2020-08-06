@@ -44,6 +44,15 @@ def load_options():
         print("  voice:", op_voice)
         print("  replace_eol:", replace_eol)
 
+def save_options():
+
+    ini_write(fn_ini, 'op', 'tts_rate', str(op_rate))
+    ini_write(fn_ini, 'op', 'tts_volume', str(op_volume))
+    ini_write(fn_ini, 'op', 'tts_voice', op_voice or '')
+    ini_write(fn_ini, 'op', 'debug_print', bool_to_str(debug_print))
+    ini_write(fn_ini, 'op', 'replace_eol', bool_to_str(replace_eol))
+
+
 def init_voice():
 
     try:
@@ -139,11 +148,6 @@ class Command:
             print(ret)
 
     def config(self):
-
-        ini_write(fn_ini, 'op', 'tts_rate', str(op_rate))
-        ini_write(fn_ini, 'op', 'tts_volume', str(op_volume))
-        ini_write(fn_ini, 'op', 'tts_voice', op_voice or '')
-        ini_write(fn_ini, 'op', 'debug_print', bool_to_str(debug_print))
-        ini_write(fn_ini, 'op', 'replace_eol', bool_to_str(replace_eol))
-
+        
+        save_options()
         file_open(fn_ini)
